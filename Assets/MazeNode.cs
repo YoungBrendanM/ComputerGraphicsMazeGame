@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MazeNode {
     private bool seen;
-    private List<MazeNode> connections;
+    public List<MazeNode> connections;
     private List<bool> wall;
 
     public MazeNode() {
