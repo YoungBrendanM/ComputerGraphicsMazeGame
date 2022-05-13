@@ -18,27 +18,23 @@ public class PlayerController : MonoBehaviour
 
 	void Start()
 	{
-		// Store reference to attached component
 		controller = GetComponent<CharacterController>();
 		Cursor.visible = false;
-
 	}
 
 	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-			speed = 20.0F;
+			speed = 30.0F;
         }
 		if (Input.GetKeyUp(KeyCode.LeftShift))
 		{
-			speed = 10.0F;
+			speed = 15.0F;
 		}
 
-		// Character is on ground (built-in functionality of Character Controller)
 		if (controller.isGrounded)
 		{
-			// Use input up and down for direction, multiplied by speed
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 			moveDirection = transform.TransformDirection(moveDirection);
 			moveDirection *= speed;
@@ -62,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
 			if (KeyBehavior.GetScore() == 3)
 			{
+				Cursor.visible = true;
 				SceneManager.LoadScene("WinScene");
 			}
 

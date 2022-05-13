@@ -11,7 +11,7 @@ public class Projection : MonoBehaviour
     private List<Vector3> normals;
     private List<Vector2> uv;
 
-    private Maze2D maze;
+    private Maze2DSquare maze;
     void OnEnable () {
 		var mesh = new Mesh {
 			name = "Procedural Mesh"
@@ -21,7 +21,7 @@ public class Projection : MonoBehaviour
         this.normals = new List<Vector3>();
         this.uv = new List<Vector2>();
 
-        this.maze = new Maze2D(10, 10);
+        this.maze = new Maze2DSquare(10, 10);
 
         this.AddYPQuad(0,1,0);
         this.AddYNQuad(0,0,0);

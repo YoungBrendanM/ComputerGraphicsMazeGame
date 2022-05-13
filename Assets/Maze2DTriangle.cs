@@ -54,11 +54,13 @@ public class Maze2DTriangle {
         this.visited = new List<MazeNode>();
         this.maze[0][0].VisitSet();
         this.visited.Add(this.maze[0][0]);
-        while(this.visited.Count<(xSize*2-1)*ySize) {
-            int rand = Random.Range(0,visited.Count);
+        while (this.visited.Count < (xSize * 2 - 1) * ySize)
+        {
+            int rand = Random.Range(0, visited.Count);
             MazeNode source = this.visited[rand];
             MazeNode destination = source.RandomNeighbor();
-            if(source.RemoveWallToUnvisited(destination)){
+            if (source.RemoveWallToUnvisited(destination))
+            {
                 this.visited.Add(destination);
             }
         }
