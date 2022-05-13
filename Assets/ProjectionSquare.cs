@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-public class ProjectionSquare : MonoBehaviour
+public class Projection : MonoBehaviour
 {
 
     private List<Vector3> verticies;
@@ -11,7 +11,7 @@ public class ProjectionSquare : MonoBehaviour
     private List<Vector3> normals;
     private List<Vector2> uv;
 
-    private Maze2DSquare maze;
+    private Maze2D maze;
     void OnEnable () {
 		var mesh = new Mesh {
 			name = "Procedural Mesh"
@@ -21,7 +21,7 @@ public class ProjectionSquare : MonoBehaviour
         this.normals = new List<Vector3>();
         this.uv = new List<Vector2>();
 
-        this.maze = new Maze2DSquare(10, 10);
+        this.maze = new Maze2D(10, 10);
 
         this.AddYPQuad(0,1,0);
         this.AddYNQuad(0,0,0);
@@ -150,7 +150,21 @@ public class ProjectionSquare : MonoBehaviour
         mesh.normals = this.normals.ToArray();
         mesh.uv = this.uv.ToArray();
 		GetComponent<MeshFilter>().mesh = mesh;
-	}
+
+        //https://forum.unity.com/threads/attach-mesh-collider-via-script-at-runtime.301918/
+        // The above forum post is the source of this snippet.  This grabs the game object and adds a mesh collider
+        Component[] meshrenderer;
+        MeshCollider mc = gameObject.AddComponent<MeshCollider>();
+        meshrenderer = GetComponentsInChildren(typeof(MeshRenderer));
+        if (meshrenderer != null)
+        {
+            foreach (MeshRenderer rend in meshrenderer)
+            {
+                rend.gameObject.AddComponent<MeshCollider>();
+                mc.convex = true;
+            }
+        }
+    }
 
     void AddYPQuad(float x, float y, float z) {
         this.triangles.AddRange(new int[] {this.verticies.Count+0, this.verticies.Count+2, this.verticies.Count+1});

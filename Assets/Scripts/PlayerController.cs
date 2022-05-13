@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-	public float speed = 6.0F;
+	public float speed = 10.0F;
 	public float gravity = 20.0F;
 
 	public float horizontalSpeed = 2.0F;
 	public float verticalSpeed = 2.0F;
 
-	//public ScoreBehavior score;
+	public KeyBehavior keyTotal;
 
 	private Vector3 moveDirection = Vector3.zero;
 	public CharacterController controller;
@@ -26,6 +26,15 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+			speed = 20.0F;
+        }
+		if (Input.GetKeyUp(KeyCode.LeftShift))
+		{
+			speed = 10.0F;
+		}
+
 		// Character is on ground (built-in functionality of Character Controller)
 		if (controller.isGrounded)
 		{
@@ -48,8 +57,13 @@ public class PlayerController : MonoBehaviour
 	{
 		if (hit.tag == "Key")
 		{
-			//ScoreBehavior.AddScore();
+			KeyBehavior.AddScore();
 			Destroy(hit.gameObject);
+
+			if (KeyBehavior.GetScore() == 3)
+			{
+				SceneManager.LoadScene("WinScene");
+			}
 
 		}
 	}
